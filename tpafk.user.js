@@ -188,7 +188,8 @@ tagpro.ready(function () {
         });
     })();
 
-
+    // The next bit of code is deliberately made more complicated to prevent others to easily change the player limit from 4 to 8.
+    // Of course, this is security through obscurity, but someone who is able to edit the obfuscated code is probably able to make a script like this on his own.
 
     function b() {
         for (var a in tagpro.KeyComm.sentTime) {
