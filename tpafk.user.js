@@ -20,19 +20,17 @@ var warn_time = 5;                                                              
 // When you don have the TagPro Honk script, I recommend setting this to 20           //  //
 var honk_time = 200;                                                                  //  //
                                                                                       //  //
-// Do you want to get a chat message?                                                 //  //
-var chat = true;                                                                      //  //
-                                                                                      //  //
 // Do you want an extra auditory warning?                                             //  //
 // This is only useful if you don't have the TagPro Honk script.                      //  //
-// (This function does not work yet)                                                  //  //
-var auditory = false;                                                                 //  //
+var auditory = true;                                                                  //  //
                                                                                       //  //
 // Do you want the title of the browser tab to go crazy?                              //  //
 // This will draw your attention when you are reading the TagPro reddit while         //  //
 // joining a game (like I often do..)                                                 //  //
-// (This function does not work yet)                                                  //  //
-var tab_text = false;                                                                 //  //
+var tab_text = true;                                                                  //  //
+                                                                                      //  //
+// Do you want to get a chat message?                                                 //  //
+var chat = true;                                                                      //  //
                                                                                       //  //
 ////////////////////////////////////////////////////////////////////////////////////////  //
 //                                                     ### --- END OF OPTIONS --- ###     //
@@ -192,16 +190,12 @@ tagpro.ready(function () {
 
 
 
-    // The next bit of code is deliberately made more complicated to prevent others to easily change the player limit from 4 to 8.
-    // You should still not publish this before obfuscating it. Of course, this is security through obscurity, but someone who is
-    // able to edit the obfuscated code is probably able to make a script like this on his own.
-
     function b() {
-        for (var a in tagpro.a.b) {
-            g = Math.max(g, tagpro.a.b[a] + KICK_TIME);
+        for (var a in tagpro.KeyComm.sentTime) {
+            g = Math.max(g, tagpro.KeyComm.sentTime[a] + KICK_TIME);
         }
         a = version;
-        var e = tagpro.l;
+        var e = tagpro.players;
         for (var b in e) {
             if(e.hasOwnProperty(b) && e[c].o) (a *= a);
         }
@@ -214,20 +208,20 @@ tagpro.ready(function () {
             for (var f in c) {
                 if ( 4e-5 > Math.abs(a - c[f]) ) (d = !0);
             }
-            if(!d && 1 == tagpro.state && !e[tagpro.j].g) if(tagpro.m) tagpro.a.send(["up", "down"], honk_time); else (function(){if(chat) tagpro.c.h("local:chat", {
+            if(!d && 1 == tagpro.state && !e[tagpro.playerId].dead) if(tagpro.spectator) tagpro.KeyComm.send(["up", "down"], honk_time); else (function(){if(chat) tagpro.socket.emit("local:chat", {
                 s: "all",
                 from: "Anti-AFK",
                 message: MESSAGES[Math.floor(Math.random() * MESSAGES.length)],
                 f: "#6e2292"
             });})();
         }
-        for (var h in tagpro.a.b) {
-            g = Math.max(g, tagpro.a.b[h] + KICK_TIME);
+        for (var h in tagpro.KeyComm.sentTime) {
+            g = Math.max(g, tagpro.KeyComm.sentTime[h] + KICK_TIME);
         }
         setTimeout(b, Math.max(g - Date.now() - 1e3 * warn_time, 1e3 * warn_time / 2));
     }
     var g = Date.now() + KICK_TIME_AT_START;
-    tagpro.c.i("time", function(a) {
+    tagpro.socket.on("time", function(a) {
         if(a.startTime) (g = a.startTime.getTime() + KICK_TIME_AT_START);
     });
     setTimeout(b, Math.max(g - Date.now() - 1e3 * warn_time, 1e3 * warn_time / 2));
