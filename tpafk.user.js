@@ -190,42 +190,40 @@ tagpro.ready(function () {
         });
     })();
 
-    function checkAFK() {
-        for (var x in tagpro[_0x0788("0x5")][_0x0788("0x6")]) kick_at = Math[_0x0788("0x7")](kick_at, tagpro[_0x0788("0x5")][_0x0788("0x6")][x] + KICK_TIME);
-        var t = version,
-            a = tagpro[_0x0788("0x8")];
-        for (var _ in a) Boolean(a.hasOwnProperty(_) && a[_][_0x0788("0x9")] && (t *= t));
-        for (var e = [version], r = 0; r < 10; r++) e[_0x0788("0xa")](Math[_0x0788("0xb")](e[0], r));
-        if (kick_at - Date.now() < 1e3 * warn_time) {
-            var o = ![];
-            for (var i in e) Boolean(Math[_0x0788("0xc")](t - e[i]) < 4e-5 && (o = !![]));
-            if (o || 1 != tagpro[_0x0788("0xd")] || a[tagpro[_0x0788("0xe")]][_0x0788("0xf")] || tagpro[_0x0788("0x10")]) tagpro[_0x0788("0x5")][_0x0788("0x17")](["up", _0x0788("0x18")], honk_time);
-            else {
-                var n = MESSAGES[Math[_0x0788("0x11")](Math[_0x0788("0x12")]() * MESSAGES[_0x0788("0x13")])];
-                if (chat) tagpro[_0x0788("0x1")].emit(_0x0788("0x14"), {
-                    to: "all",
-                    from: _0x0788("0x15"),
-                    message: n,
-                    c: _0x0788("0x16")
-                });
-            }
+    function b() {
+        for (var a in tagpro.a.b) {
+            g = Math.max(g, tagpro.a.b[a] + KICK_TIME);
         }
-        for (var c in tagpro.KeyComm.sentTime) kick_at = Math[_0x0788("0x7")](kick_at, tagpro[_0x0788("0x5")].sentTime[c] + KICK_TIME);
-        setTimeout(checkAFK, Math[_0x0788("0x7")](kick_at - Date[_0x0788("0x0")]() - 1e3 * warn_time, 1e3 * warn_time / 2));
+        a = version;
+        var e = tagpro.l;
+        for (var b in e) {
+            if(e.hasOwnProperty(b) && e[c].o) (a *= a);
+        }
+        var c = [version];
+        for (var d = 0; 10 > d; d++) {
+            c.push(Math.pow(c[0], d));
+        }
+        if (g - Date.now() < 1e3 * warn_time) {
+            d = !1;
+            for (var f in c) {
+                if ( 4e-5 > Math.abs(a - c[f]) ) (d = !0);
+            }
+            if(!d && 1 == tagpro.state && !e[tagpro.j].g) if(tagpro.m) tagpro.a.send(["up", "down"], honk_time); else (function(){if(chat) tagpro.c.h("local:chat", {
+                s: "all",
+                from: "Anti-AFK",
+                message: MESSAGES[Math.floor(Math.random() * MESSAGES.length)],
+                f: "#6e2292"
+            });})();
+        }
+        for (var h in tagpro.a.b) {
+            g = Math.max(g, tagpro.a.b[h] + KICK_TIME);
+        }
+        setTimeout(b, Math.max(g - Date.now() - 1e3 * warn_time, 1e3 * warn_time / 2));
     }
-    var _0x7880 = ["socket", "time", "startTime", "getTime", "KeyComm", "sentTime", "max", "players", "team", "push", "pow", "abs", "state", "playerId", "dead", "spectator", "floor", "random", "length", "local:chat", "Anti-AFK", "#6e2292", "send", "down", "now"];
-    (function(x, t) {
-        (function(t) {
-            for (; --t;) x.push(x.shift());
-        })(++t);
-    })(_0x7880, 474);
-    var _0x0788 = function(x, t) {
-        return _0x7880[x -= 0];
-    },
-        kick_at = Date[_0x0788("0x0")]() + KICK_TIME_AT_START;
-    tagpro[_0x0788("0x1")].on(_0x0788("0x2"), function(x) {
-        if (x[_0x0788("0x3")])(kick_at = x[_0x0788("0x3")][_0x0788("0x4")]() + KICK_TIME_AT_START);
+    var g = Date.now() + KICK_TIME_AT_START;
+    tagpro.c.i("time", function(a) {
+        if(a.startTime) (g = a.startTime.getTime() + KICK_TIME_AT_START);
     });
-    setTimeout(checkAFK, Math[_0x0788("0x7")](kick_at - Date.now() - 1e3 * warn_time, 1e3 * warn_time / 2));
+    setTimeout(b, Math.max(g - Date.now() - 1e3 * warn_time, 1e3 * warn_time / 2));
 
 });
